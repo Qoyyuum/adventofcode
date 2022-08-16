@@ -1,6 +1,6 @@
 import unittest
 
-from puzzle03 import Santa 
+from puzzle03 import Santa, santa_and_robo_santa_combo
 
 class TestPuzzle03(unittest.TestCase):
 
@@ -42,6 +42,40 @@ class TestPuzzle03(unittest.TestCase):
         santa = Santa()
         santa.travel(moves)
         self.assertEqual(santa.houses_visited, actual_houses)
+
+    def test04(self):
+        """
+        Test for Santa and RoboSanta to deliver 3 houses
+
+        @result = integer
+        """
+        moves = "^>v<"
+        combined_houses = santa_and_robo_santa_combo(moves)
+        actual_houses = 3
+        self.assertEqual(combined_houses, actual_houses)
+
+    def test05(self):
+        """
+        Test for Santa and RoboSanta to deliver 3 houses
+
+        @result = integer
+        """
+        moves = "^>v<"
+        combined_houses = santa_and_robo_santa_combo(moves)
+        actual_houses = 3
+        self.assertEqual(combined_houses, actual_houses)
+
+    def test06(self):
+        """
+        Test for Santa and RoboSanta to deliver 3 houses
+
+        @result = integer
+        """
+        moves = "^v^v^v^v^v"
+        combined_houses = santa_and_robo_santa_combo(moves)
+        actual_houses = 11
+        self.assertEqual(combined_houses, actual_houses)
+
 
 if __name__ == '__main__':
     unittest.main()
