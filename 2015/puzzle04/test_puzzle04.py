@@ -11,13 +11,13 @@ class TestPuzzle04(unittest.TestCase):
 
         MD5 hash of abcdef609043 starts with
         000001dbbfa....
-        And its the lowest number.
+        And its the lowest number with 5 leading zeroes.
         """
         key = "abcdef"
         answer = "609043"
         
         a = AdventCoin(key)
-        a.mine()
+        a.mine(5)
         expected = a.lowest_number
 
         self.assertEqual(expected, answer)
@@ -29,13 +29,13 @@ class TestPuzzle04(unittest.TestCase):
 
         MD5 hash of pqrstuv104870 starts with
         000006136ef....
-        And its the lowest number.
+        And its the lowest number with 5 leading zeroes.
         """
         key = "pqrstuv"
         answer = "1048970"
         
         a = AdventCoin(key)
-        a.mine()
+        a.mine(5)
         expected = a.lowest_number
 
         self.assertEqual(expected, answer)
