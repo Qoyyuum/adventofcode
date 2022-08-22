@@ -32,6 +32,7 @@ class Name:
         for f in forbidden:
             if f in self.text:
                 self.forbidden = True
+                break
         return self.forbidden
 
     def is_nice(self, checks:int=1) -> bool:
@@ -47,25 +48,10 @@ class Name:
 
     def check_non_overlapping_letter_pairs(self) -> bool:
         self.none_overlapped = False
-        pairs = dict(enumerate([self.text[i:i+2] for i in range(len(self.text) - 1)]))
-        #print(f"{pairs=}")
-        pairs_positions = {}
-        for index, pair in pairs.items():
-            try:
-                if pairs_positions[pair]:
-                    pairs_positions[pair].append(index)
-            except KeyError:
-                pairs_positions[pair] = [index]
-        #print(f"{pairs_positions=}")
-        for positions in pairs_positions.values():
-            if len(positions) > 1:
-                try:
-                    first, second = positions
-                    if second - first != 1:
-                        self.none_overlapped = True
-                        break
-                except ValueError:
-                    continue
+        for i in range(len(self.text)-1):
+            if self.text.count(f'{self.text[i]}{self.text[i+1]}') > 1:
+                self.none_overlapped = True
+                break
         return self.none_overlapped
 
 def main():
