@@ -4,7 +4,7 @@ from puzzle06 import LightGrid
 
 class TestPuzzle06(unittest.TestCase):
 
-    def test_turn_on_all_lights(self):
+    def test_turn_on_all_lights01(self):
         """
         Turn on all lights from 0,0 through 999,999
         """
@@ -14,6 +14,28 @@ class TestPuzzle06(unittest.TestCase):
         lg = LightGrid(1000,1000)
         lg.on(start, end)
         self.assertEqual(lg.lights_on, expected)
+
+    def test_turn_on_lights01(self):
+        """
+        1 Brightness when 1 position is turned on
+        """
+        start = 0,0
+        end = 0,0
+        expected = 1
+        lg = LightGrid(1000,1000)
+        lg.on(start, end)
+        self.assertEqual(lg.brightness, expected)
+
+    def test_toggle_all_lights02(self):
+        """
+        2,000,000 brightness when toggle all lights
+        """
+        start = 0,0
+        end = 999,999
+        expected = 2_000_000
+        lg = LightGrid(1000,1000)
+        lg.toggle(start, end)
+        self.assertEqual(lg.brightness, expected)
         
     def test_toggle_lights01(self):
         """
@@ -79,6 +101,7 @@ class TestPuzzle06(unittest.TestCase):
         lg.on((0,0),(999,999))
         lg.off(start,end)
         self.assertEqual(lg.lights_on, expected)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -7,38 +7,51 @@ class LightGrid:
 
     def __post_init__(self):
         """
-        Sets up a grid of lights with default off
+        Sets up a grid of lights with default off (0)
         with size supplied in x and y
         """
         self.grid = {}
         self.lights_on = 0
         self.lights_off = 0
+        #self.brightness = 0
         for x in range(self.x):
             for y in range(self.y):
-                self.grid[x,y] = False
-        self.count_lights_lit()
+                self.grid[x,y] = 0
         return self.grid
 
-    def on(self, start, end):
+    def on(self, start, end) -> None:
         for x in range(int(start[0]), int(end[0])+1):
             for y in range(int(start[1]), int(end[1])+1):
-                self.grid[x, y] = True
-        return self.count_lights_lit()
+                #self.grid[x, y] = True
+                self.grid[x, y] += 1
+                #self.brightness += 1
+        self.count_lights_lit()
+        self.get_total_brightness()
+        return
 
-    def off(self, start, end):
+    def off(self, start, end) -> None:
         for x in range(int(start[0]), int(end[0])+1):
             for y in range(int(start[1]), int(end[1])+1):
-                self.grid[x, y] = False
-        return self.count_lights_lit()
+                #self.grid[x, y] = False
+                if self.grid[x,y] > 0:
+                    self.grid[x, y] -= 1
+                #self.brightness -= 1
+        self.count_lights_lit()
+        self.get_total_brightness()
+        return
 
-    def toggle(self, start, end):
+    def toggle(self, start, end) -> None:
         for x in range(int(start[0]), int(end[0])+1):
             for y in range(int(start[1]), int(end[1])+1):
-                if self.grid[x,y]:
-                    self.grid[x,y] = False
-                else:
-                    self.grid[x,y] = True
-        return self.count_lights_lit()
+                #if self.grid[x,y]:
+                    #self.grid[x,y] = False
+                #else:
+                    #self.grid[x,y] = True
+                #self.brightness += 2
+                self.grid[x,y] += 2
+        self.count_lights_lit()
+        self.get_total_brightness()
+        return
 
     def count_lights_lit(self):
         from collections import Counter
@@ -48,6 +61,10 @@ class LightGrid:
         if False in lights:
             self.lights_off = lights[False]
         return self.lights_on
+
+    def get_total_brightness(self):
+        self.brightness = sum(self.grid.values())
+        return self.brightness
                 
 def main():
     lg = LightGrid(1000,1000)
@@ -65,6 +82,7 @@ def main():
         if splitLine[0] == 'toggle':
             lg.toggle(start,end)
     print(f'{lg.lights_on = }')
+    print(f'{lg.brightness = }')
 
 if __name__ == '__main__':
     main()
