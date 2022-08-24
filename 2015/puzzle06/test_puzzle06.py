@@ -1,6 +1,6 @@
 import unittest
 
-from puzzle06 import LightGrid
+from puzzle06 import LightGrid, solve
 
 class TestPuzzle06(unittest.TestCase):
 
@@ -13,6 +13,7 @@ class TestPuzzle06(unittest.TestCase):
         expected = 1_000_000
         lg = LightGrid(1000,1000)
         lg.on(start, end)
+        lg.count_lights_lit()
         self.assertEqual(lg.lights_on, expected)
 
     def test_turn_on_lights01(self):
@@ -24,6 +25,7 @@ class TestPuzzle06(unittest.TestCase):
         expected = 1
         lg = LightGrid(1000,1000)
         lg.on(start, end)
+        lg.count_lights_lit()
         self.assertEqual(lg.brightness, expected)
 
     def test_toggle_all_lights02(self):
@@ -35,6 +37,7 @@ class TestPuzzle06(unittest.TestCase):
         expected = 2_000_000
         lg = LightGrid(1000,1000)
         lg.toggle(start, end)
+        lg.count_lights_lit()
         self.assertEqual(lg.brightness, expected)
         
     def test_toggle_lights01(self):
@@ -47,6 +50,7 @@ class TestPuzzle06(unittest.TestCase):
         expected = 1000
         lg = LightGrid(1000,1000)
         lg.toggle(start, end)
+        lg.count_lights_lit()
         self.assertEqual(lg.lights_on, expected)
         
     def test_toggle_lights02(self):
@@ -60,6 +64,7 @@ class TestPuzzle06(unittest.TestCase):
         lg = LightGrid(1000,1000)
         lg.on((0,0),(999,999))
         lg.toggle(start, end)
+        lg.count_lights_lit()
         self.assertEqual(lg.lights_on, expected)
         
     def test_toggle_lights03(self):
@@ -74,6 +79,7 @@ class TestPuzzle06(unittest.TestCase):
         lg = LightGrid(1000,1000)
         lg.on(start, half)
         lg.toggle(start, end)
+        lg.count_lights_lit()
         self.assertEqual(lg.lights_on, expected)
         
     def test_turn_off_lights01(self):
@@ -86,6 +92,7 @@ class TestPuzzle06(unittest.TestCase):
         expected = 0
         lg = LightGrid(1000,1000)
         lg.off(start,end)
+        lg.count_lights_lit()
         self.assertEqual(lg.lights_on, expected)
 
     def test_turn_off_lights02(self):
@@ -100,8 +107,16 @@ class TestPuzzle06(unittest.TestCase):
         lg = LightGrid(1000,1000)
         lg.on((0,0),(999,999))
         lg.off(start,end)
+        lg.count_lights_lit()
         self.assertEqual(lg.lights_on, expected)
 
+    def test_check_answers(self):
+        """
+        Make sure the code still gives the same answer
+        """
+        part1, part2 = solve()
+        self.assertEqual(part1, 543903)
+        self.assertEqual(part2, 14687245)
 
 if __name__ == '__main__':
     unittest.main()

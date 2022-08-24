@@ -22,20 +22,15 @@ class LightGrid:
         for x in range(int(start[0]), int(end[0])+1):
             for y in range(int(start[1]), int(end[1])+1):
                 self.grid[x, y]["on"] = True
-                self.lights_on += 1
                 self.grid[x, y]["brightness"] += 1
-                self.brightness += 1
         return
 
     def off(self, start, end) -> None:
         for x in range(int(start[0]), int(end[0])+1):
             for y in range(int(start[1]), int(end[1])+1):
                 self.grid[x, y]["on"] = False
-                if self.lights_on > 0:
-                    self.lights_on -= 1
                 if self.grid[x,y]["brightness"] > 0:
                     self.grid[x, y]["brightness"] -= 1
-                self.brightness -= 1
         return
 
     def toggle(self, start, end) -> None:
@@ -43,17 +38,19 @@ class LightGrid:
             for y in range(int(start[1]), int(end[1])+1):
                 if self.grid[x,y]["on"]:
                     self.grid[x,y]["on"] = False
-                    if self.lights_on > 0:
-                        self.lights_on -= 1
                 else:
                     self.grid[x,y]["on"] = True
-                    self.lights_on += 1
                 self.grid[x,y]["brightness"] += 2
-                self.brightness += 2
         return
 
+    def count_lights_lit(self):
+        for keys in self.grid.values():
+            if keys["on"]:
+                self.lights_on += 1
+            self.brightness += keys["brightness"]
+        return self.lights_on
                 
-def main():
+def solve():
     lg = LightGrid(1000,1000)
     with open('input_puzzle06.txt', 'r') as f:
         lines = f.readlines()
@@ -68,8 +65,20 @@ def main():
             lg.off(start,end)
         if splitLine[0] == 'toggle':
             lg.toggle(start,end)
+    lg.count_lights_lit()
     print(f'{lg.lights_on = }')
     print(f'{lg.brightness = }')
+    return lg.lights_on, lg.brightness
 
 if __name__ == '__main__':
-    main()
+    #main()
+    start = 0,0
+    end = 999,0
+    lg = LightGrid(1000,1000)
+    lg.on(start, (999,999))
+    lg.toggle(start,end)
+    lg.count_lights_lit()
+    print(lg.lights_on)
+
+
+"Ironduxe_01"
