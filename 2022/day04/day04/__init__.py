@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import List
 
 @dataclass
 class Section:
@@ -52,6 +53,25 @@ class Section:
         if start == end:
             return start
 
+    @staticmethod
+    def expand_int_range(start:int, end:int) -> List:
+        result = []
+        difference = end - start
+        if difference == 0:
+            return [start]
+        if difference > 0:
+            result.append(start)
+            for d in range(difference):
+                result.append(d)
+            result.append(end)
+        return result
+        if difference < 0:
+            raise ValueError()
+    
+def find_overlapping_pairs(pairs_list) -> int:
+    for pair in pairs_list:
+        Section.expand_int_range()
+
 def answer_for_part_1(input_file:str) -> int:
     fully_contained_pairs_list = []
     with open(input_file, 'r') as file:
@@ -65,6 +85,19 @@ def answer_for_part_1(input_file:str) -> int:
             fully_contained_pairs_list.append(section.fully_contained)
     print(len(fully_contained_pairs_list))
     return len(fully_contained_pairs_list)
+
+def answer_for_part_2() -> int:
+    fully_contained_pairs_list = []
+    with open(input_file, 'r') as file:
+        data = file.readlines()
+
+    for pair in data:
+        section = Section(pair)
+        section.split()
+        section.check_fully_contained()
+        if section.fully_contained:
+            fully_contained_pairs_list.append(section.pair)
+    return find_overlapping_pairs(fully_contained_pairs_list)
 
 if __name__ == "__main__":
     answer_for_part_1('input.txt')
