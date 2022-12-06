@@ -1,6 +1,6 @@
 import unittest
 
-from day04 import Section, find_overlapping_pairs
+from day04 import Section
 
 class TestSection(unittest.TestCase):
     def setUp(self):
@@ -28,16 +28,23 @@ class TestSection(unittest.TestCase):
         """
         From the test input, there are 4 overlapping assignment pairs.
         """
-        fully_contained_pairs_list = []
+        count = 0
         for test_pair in self.test_data:
             section = Section(test_pair)
             section.split()
-            section.check_fully_contained()
-            if section.fully_contained:
-                fully_contained_pairs_list.append(section.fully_contained)
-        overlapped_assignment_pairs = find_overlapping_pairs(fully_contained_pairs_list)
+            if section.is_overlapped:
+                count += 1
         expected = 4
-        self.assertEqual(overlapped_assignment_pairs, expected)
+        self.assertEqual(count, expected)
+
+    def test_expand_int_range(self):
+        """
+        Expand from 1-10 to [1,2,3,4,5,6,7,8,9,10]
+        """
+        expected = [1,2,3,4,5,6,7,8,9,10]
+        start = 1
+        end = 10
+        self.assertEqual(Section.expand_int_range(start, end), expected)
 
 if __name__ == "__main__":
     unittest.main()
