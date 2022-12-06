@@ -32,7 +32,7 @@ class TestSection(unittest.TestCase):
         for test_pair in self.test_data:
             section = Section(test_pair)
             section.split()
-            if section.is_overlapped:
+            if section.is_overlapped():
                 count += 1
         expected = 4
         self.assertEqual(count, expected)

@@ -58,13 +58,10 @@ class Section:
 
     def is_overlapped(self) -> bool:
         left_start, left_end, right_start, right_end = self.split()
-        if left_start <= right_start <= left_end:
-            return True
-        if left_start <= right_end <= left_end:
-            return True
-        if right_start <= left_start <= right_end:
-            return True
-        if right_start <= left_end <= right_end:
+        left_range = Section.expand_int_range(left_start, left_end)
+        right_range = Section.expand_int_range(right_start, right_end)
+        all_range = [*left_range, *right_range]
+        if len(set(all_range)) - len(all_range) < 0:
             return True
         return False
 
@@ -75,8 +72,8 @@ class Section:
         if difference == 0:
             return [start]
         if difference > 0:
-            for d in range(difference+1):
-                result.append(d+1)
+            for d in range(start, end+1):
+                result.append(d)
         return result
         if difference < 0:
             raise ValueError()
@@ -106,7 +103,10 @@ def answer_for_part_2(input_file:str) -> int:
         section.split()
         if section.is_overlapped():
             count += 1
+    print(count)
     return count
 
 if __name__ == "__main__":
-    answer_for_part_1('input.txt')
+    puzzle_input = 'input.txt'
+    answer_for_part_1(puzzle_input)
+    answer_for_part_2(puzzle_input)
